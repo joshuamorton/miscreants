@@ -1,5 +1,5 @@
-
-// Only provide support for two player games, but beyond that should be 
+// Only provide support for two player games, but beyond that should be
+#[derive(Clone, Copy, PartialEq, Debug)]
 pub enum Player {
     One,
     Two,
@@ -13,12 +13,11 @@ pub enum Player {
 ///  - A list of valid moves for a player, from a given state
 ///  - A way to see the impact of a move on the state
 ///  - A check to see if a player won the game
-pub trait Game<State, Move> {
+pub trait Game<State, Move: Copy> {
     fn get_player(&self) -> Player;
-    fn get_state(&self) -> State;
+    fn get_state(&self) -> &State;
     fn set_state(&mut self, state: State);
-    fn next_move(&self, player: Player) -> Box<Vec<Move>>;
-    fn evaluate(state: State, action: Move) -> State;
+    fn moves(state: State, player: Player) -> Vec<Move>;
+    fn evaluate(state: State, player: Player, action: Move) -> State;
     fn won(state: State, player: Player) -> bool;
 }
-
