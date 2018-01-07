@@ -1,0 +1,6 @@
+[package]
+name = "miscreants"
+version = "0.1.0"
+authors = ["Joshua Morton <joshua.morton13@gmail.com>"]
+
+[dependencies]
