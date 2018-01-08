@@ -63,19 +63,21 @@ impl game::Game<TicTacToeBoard, (usize, usize)> for TicTacToe {
 
 
     fn won(state: TicTacToeBoard, player: Player) -> bool {
-        let winning_combos = vec![
-            vec![0, 1, 2],
-            vec![3, 4, 5],
-            vec![6, 7, 8],
-            vec![0, 3, 6],
-            vec![1, 4, 7],
-            vec![2, 5, 8],
-            vec![0, 4, 8],
-            vec![2, 4, 6],
+        let winning_combos = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6],
         ];
 
         let positions: Vec<&Option<Player>> = state.iter().flat_map(|row| row.iter()).collect();
 
+        // The need for * and & here is a bit unintuitive, but the compiler also
+        // basically told me what to do.
         winning_combos.iter().any(|c| c.iter().all(|i| positions[*i] == &Some(player)))
     }
 }
