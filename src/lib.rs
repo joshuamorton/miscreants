@@ -61,8 +61,22 @@ impl game::Game<TicTacToeBoard, (usize, usize)> for TicTacToe {
         copy
     }
 
+
     fn won(state: TicTacToeBoard, player: Player) -> bool {
-        false
+        let winning_combos = vec![
+            vec![0, 1, 2],
+            vec![3, 4, 5],
+            vec![6, 7, 8],
+            vec![0, 3, 6],
+            vec![1, 4, 7],
+            vec![2, 5, 8],
+            vec![0, 4, 8],
+            vec![2, 4, 6],
+        ];
+
+        let positions: Vec<&Option<Player>> = state.iter().flat_map(|row| row.iter()).collect();
+
+        winning_combos.iter().any(|c| c.iter().all(|i| positions[*i] == &Some(player)))
     }
 }
 
@@ -70,6 +84,23 @@ impl game::Game<TicTacToeBoard, (usize, usize)> for TicTacToe {
 mod tests {
     use game::*;
     use TicTacToe;
+    use TicTacToeBoard;
+
+    const BEGIN_BOARD: [[Option<Player>; 3]; 3] = [
+            [None, None, None],
+            [None, Some(Player::One), None],
+            [None, None, None],
+        ];
+
+    const END_BOARD: [[Option<Player>; 3]; 3] = [
+            [Some(Player::One), None, Some(Player::Two)],
+            [None, Some(Player::One), Some(Player::Two)],
+            [None, None, Some(Player::One)],
+        ];
+
+    fn convert_board(board: [[Option<Player>; 3]; 3]) -> TicTacToeBoard {
+        board.to_vec().iter().map(|r| r.to_vec()).collect()
+    }
 
     #[test]
     fn test_first_move() {
@@ -80,12 +111,18 @@ mod tests {
     #[test]
     fn test_later_move() {
         let mut g = TicTacToe::new();
-        g.set_state(vec![
-            vec![None, None, None],
-            vec![None, Some(Player::One), None],
-            vec![None, None, None],
-        ]);
+        g.set_state(convert_board(BEGIN_BOARD));
         assert_eq!(Player::Two, g.get_player());
     }
 
+    #[test]
+    fn test_winner_exists() {
+        assert!(TicTacToe::won(convert_board(END_BOARD), Player::One));
+    }
+
+    #[test]
+    fn test_no_winner_exists() {
+        assert!(!TicTacToe::won(convert_board(BEGIN_BOARD), Player::One));
+        assert!(!TicTacToe::won(convert_board(END_BOARD), Player::Two));
+    }
 }
