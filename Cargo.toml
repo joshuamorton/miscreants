@@ -4,3 +4,5 @@ version = "0.1.0"
 authors = ["Joshua Morton <joshua.morton13@gmail.com>"]
 
 [dependencies]
+probability = "0.15.11"
+random = "0.12.2"
