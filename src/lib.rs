@@ -1,4 +1,5 @@
 pub mod game;
+pub mod mcts;
 use game::Player;
 
 type TicTacToeBoard = Vec<Vec<Option<game::Player>>>;
@@ -7,15 +8,13 @@ pub struct TicTacToe {
     board: TicTacToeBoard,
 }
 
-impl TicTacToe {
-    pub fn new() -> TicTacToe {
+impl game::Game<TicTacToeBoard, (usize, usize)> for TicTacToe {
+    fn new() -> TicTacToe {
         TicTacToe {
             board: vec![vec![Option::None; 3]; 3],
         }
     }
-}
 
-impl game::Game<TicTacToeBoard, (usize, usize)> for TicTacToe {
     fn get_player(&self) -> Player {
         let positions = self.board.iter().flat_map(|row| row.iter());
 

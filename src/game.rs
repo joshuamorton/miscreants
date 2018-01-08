@@ -8,6 +8,7 @@ pub enum Player {
 /// A Game is an entity that the MCTS algorithm can run over.
 ///
 /// A Game need only be able to provide:
+///  - A constructor
 ///  - An accessor method for the current player
 ///  - A getter and setter for the game state
 ///  - A list of valid moves for a player, from a given state
@@ -22,6 +23,9 @@ pub enum Player {
 ///  mana UUBG is bordering on a complex enough datastructure that it shoud
 ///  not be copy.
 pub trait Game<State, Move: Copy> {
+
+    fn new() -> Self;
+
     /// Simple getter for the player to move, this should probably eventually
     /// be converted to a trait attribute, even though it can be derived from
     /// the state for most games.
