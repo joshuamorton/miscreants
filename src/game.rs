@@ -23,7 +23,7 @@ pub enum Player {
 ///  not be copy.
 pub trait Game<State, Move: Copy> {
     /// Simple getter for the player to move, this should probably eventually
-    /// be converted to a trait attribute, even though it can be derived from 
+    /// be converted to a trait attribute, even though it can be derived from
     /// the state for most games.
     fn get_player(&self) -> Player;
 
@@ -35,14 +35,14 @@ pub trait Game<State, Move: Copy> {
 
     /// Method to generate all valid moves from the current position. The
     /// return value should probably be Iterator<Move>, but that isn't
-    /// currently expressible. 
+    /// currently expressible.
     /// This might matter for games with incredibly high branching factors
     /// where a generator of moves is better, and you need to reservoir sample
     /// to get the move, but that's a future improvement, and probably a
     /// backwards compatible change.
     fn moves(state: State, player: Player) -> Vec<Move>;
 
-    /// Method to get the resulting game state after a given move. 
+    /// Method to get the resulting game state after a given move.
     fn evaluate(state: State, player: Player, action: Move) -> State;
 
     ///A check to see if, for a current game state, a player won the game.
