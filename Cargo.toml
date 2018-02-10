@@ -6,3 +6,4 @@ authors = ["Joshua Morton <joshua.morton13@gmail.com>"]
 [dependencies]
 probability = "0.15.11"
 random = "0.12.2"
+float-ord = "0.1.2"

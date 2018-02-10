@@ -23,7 +23,6 @@ pub enum Player {
 ///  mana UUBG is bordering on a complex enough datastructure that it shoud
 ///  not be copy.
 pub trait Game<State, Move: Copy> {
-
     fn new() -> Self;
 
     /// Simple getter for the player to move, this should probably eventually
