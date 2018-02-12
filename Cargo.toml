@@ -7,3 +7,4 @@ authors = ["Joshua Morton <joshua.morton13@gmail.com>"]
 probability = "0.15.11"
 random = "0.12.2"
 float-ord = "0.1.2"
+float-cmp = "0.3.0"
